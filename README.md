@@ -58,7 +58,9 @@ This standalone repository reimplements the communication pipeline from **“Enh
 
 The original institute implementation is unavailable. This new research implementation supports clinician-authored sectioned explanations, media, expression/gesture/viseme events, source-grounded follow-up questions, and branched feedback forms. It does not contain the paper's Unity project, Faceware captures, avatars, voice/gesture assets, HealthCareMagic sample, generated medical-term data, Llama weights, participant data, or experimental results.
 
-This software presents reviewed educational material. It does not diagnose, recommend treatment, calculate clinical risk, handle emergencies, or replace communication with a qualified clinician.
+The paper adopts the authors' multilingual co-speech gesture preprint as its gesture-generation research lineage; see the separate [multilingual-gesture implementation](https://github.com/ghazanPK/multilingual-gesture). This demo's motion plan is a transparent adapter and does not reuse that model or claim its trained behavior.
+
+The included quickstart uses synthetic interface fixtures without clinical review. A deployment must replace them with licensed educational sources and explanations reviewed by an accountable clinician. This software does not diagnose, recommend treatment, calculate clinical risk, handle emergencies, or replace communication with a qualified clinician.
 
 ### Setup and run
 
@@ -67,12 +69,11 @@ py -3.11 -m venv .venv
 .venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -e ".[dev]"
-python scripts/smoke.py
-virtual-physician-validate .\examples\script.json
+python scripts/prepare_viewer.py
 virtual-physician --sources .\examples\sources.jsonl --script .\examples\script.json --questionnaire .\examples\questionnaire.json
 ```
 
-The smoke run writes `outputs/smoke/script.json`, `answer.json`, `questionnaire.json`, and `questionnaire-branch.json` from the real API routes. Inspect `answer.json` for the cited passage and synchronized expression, gesture, speech, and viseme events. Then open [http://127.0.0.1:8000](http://127.0.0.1:8000) after starting the server. Omit `--questionnaire` when feedback is not required. The bundled files are synthetic interface fixtures and contain no patient or paper data.
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000) for the procedural 3D explanation, neutral/expressive comparison, cited questions and optional feedback flow. The bundled files are synthetic interface fixtures and contain no patient or paper data. For API and event checks, run `python scripts/verify.py` and `virtual-physician-validate .\examples\script.json`. The check writes `outputs/verify/script.json`, `answer.json`, `questionnaire.json`, and `questionnaire-branch.json`; omit `--questionnaire` when feedback is not required.
 
 ### Clinician-authored explanation format
 
@@ -119,8 +120,20 @@ The browser keeps answers in page memory and this server does not persist them. 
 
 ### Swap in reviewed deployment content
 
-Copy the three example files, preserve their documented keys, and replace their synthetic text with licensed, reviewed material. Point the same `virtual-physician` command at the new paths; no code change is required. `scripts/smoke.py` exercises the same app factory and API routes used by the server, including the explanation, cited question-answering, behavior events, and questionnaire branch.
+Copy the three example files, preserve their documented keys, and replace their synthetic text with licensed, reviewed material. Point the same `virtual-physician` command at the new paths; no code change is required. `scripts/verify.py` exercises the same app factory and API routes used by the server, including the explanation, cited question-answering, behavior events, and questionnaire branch.
 
 ### Browser event preview
 
-The CSS character demonstrates the event contract: speech, one facial state with intensity, gesture, and timed viseme cues run in parallel. Browser speech synthesis and text-derived visemes are portable approximations, not the paper's Naver TTS, SALSA lip sync, Faceware expressions, multilingual gesture system, or a validated bedside interface.
+The procedural Three.js character demonstrates the event contract: speech, one facial state with intensity, gesture, and timed viseme cues run in parallel. Browser speech synthesis and text-derived visemes are portable approximations, not the paper's Naver TTS, SALSA lip sync, Faceware expressions, multilingual gesture system, or a validated bedside interface.
+
+
+### Public source import and 3D browser playback
+
+`python -m virtual_physician.importer` imports one explicitly selected public educational page into a local JSONL collection. It records the HTTPS source URL and supplied review date; inspect and edit the extracted text before serving. This is a preparation tool, not clinician review. The authored explanation script remains a separate file. Do not replace its `reviewed_by` field with an automated importer or claim review that did not occur.
+
+```powershell
+python -m virtual_physician.importer "https://your-permitted-educational-source.example/page" --file data/page.html --id page-1 --title "Source title" --reviewed-at 2026-10-05 --out data/sources.jsonl
+virtual-physician --sources data/sources.jsonl --script data/approved-script.json
+```
+
+The browser presents the same authored explanation in neutral and expressive delivery with an original procedural Three.js character. The Q&A pane shows ranked source passages and an extractive answer separately from scripted clinical content. Browser speech and typed questions work without models. The quickstart prepares the pinned renderer in ignored `static/vendor/`; no avatar assets or model weights are included. For optional local speech, run `python -m pip install -e ".[speech]"`, prepare the English phonemizer dependencies in [Kokoro's setup guide](https://github.com/hexgrad/kokoro) (including `espeak-ng` where required), and set `KOKORO_MODEL_DIR` to a user-owned folder with `config.json`, `kokoro-v1_0.pth`, and `voices/af_heart.pt`. Set `WHISPER_MODEL_DIR` to a local converted faster-whisper folder with `model.bin`. The UI reports configuration errors and leaves browser speech and typed input available.

@@ -9,3 +9,4 @@ outputs/
 *.egg-info/
 build/
 dist/
+static/vendor/

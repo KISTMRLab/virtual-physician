@@ -11,6 +11,7 @@ dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.30,<1"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<9", "httpx>=0.27,<1"]
+speech = ["kokoro>=0.9.4", "soundfile", "faster-whisper>=1.1"]
 
 [project.scripts]
 virtual-physician = "virtual_physician.server:main"
@@ -21,4 +22,3 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 virtual_physician = []
-

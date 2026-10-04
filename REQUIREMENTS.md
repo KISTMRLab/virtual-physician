@@ -17,10 +17,9 @@ This repository reproduces the paper's communication architecture while treating
 
 - This is research software for clinician-reviewed patient education, not a medical device, diagnostic assistant, emergency service, or substitute for a clinician.
 - No HealthCareMagic sample, generated medical terms, Llama weights, vector store, surgery content, participant data, avatars, Faceware captures, gestures, or study results are included.
-- Text-derived visemes and the CSS character only demonstrate behavior events; they are not clinical communication validation or the paper's Unity rendering.
+- Text-derived visemes and the procedural Three.js character only demonstrate behavior events; they are not clinical communication validation or the paper's Unity rendering. Optional local speech adapters require user-provided models and do not establish clinical accuracy.
 
 ## Acceptance checks
 
 - Tests cover source validation, retrieval provenance, script-to-behavior events, and questionnaire navigation without diagnostic scoring.
 - Server files compile and the static client passes JavaScript syntax checking; no network or model download is required.
-
