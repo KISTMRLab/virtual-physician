@@ -1,0 +1,9 @@
+{
+  "title": "Synthetic interface feedback",
+  "start_id": "clear",
+  "items": [
+    {"id":"clear","type":"number","prompt":"How clear was the explanation (1-5)?","branches":[{"operator":"lte","value":2,"target":"comment"}],"next":"done"},
+    {"id":"comment","type":"text","prompt":"What should be clearer?","next":"done"},
+    {"id":"done","type":"message","prompt":"Thank you for trying the demo.","next":null}
+  ]
+}

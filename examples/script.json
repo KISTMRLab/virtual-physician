@@ -1,0 +1,21 @@
+{
+  "title": "Synthetic procedure communication demo",
+  "reviewed_by": "Repository fixture (not clinical content)",
+  "reviewed_at": "2026-10-03",
+  "sections": [
+    {
+      "id": "overview",
+      "text": "This demo shows how a reviewed explanation can drive speech, expression, gesture, and viseme events.",
+      "emotion": "neutral",
+      "intensity": 1,
+      "gesture": "open_hand"
+    },
+    {
+      "id": "questions",
+      "text": "Use the question box to retrieve a cited sentence from the configured source collection.",
+      "emotion": "happiness",
+      "intensity": 1,
+      "gesture": "reassure"
+    }
+  ]
+}
