@@ -1,9 +1,11 @@
 {
-  "file": "method.png",
-  "kind": "original-paper-figure",
+  "file": "graphical-abstract.png",
+  "kind": "ai-generated-scientific-redraw",
   "source_pdf": "virtual-physician.pdf",
   "page": 4,
   "figure": 2,
-  "alt": "Method diagram from Figure 2 of the virtual-physician paper",
-  "caption": "Original method figure from the paper: Figure 2, PDF page 4. Extracted for this research introduction; the diagram describes the original system, not verification of this reimplementation."
+  "alt": "Graphical abstract: grounded surgical explanations, expressive avatar behavior and communication study findings",
+  "caption": "Graphical abstract diagram. Grounded explanations and expressive behavior support virtual-physician communication.",
+  "original_figure": "method.png",
+  "generation_prompt": "generation-prompt.txt"
 }

@@ -8,9 +8,9 @@
 
 > Expression and gesture support surgical explanations by animated physicians.
 
-![Method diagram from Figure 2 of the virtual-physician paper](paper-assets/method.png)
+![Graphical abstract: grounded surgical explanations, expressive avatar behavior and communication study findings](paper-assets/graphical-abstract.png)
 
-*Original method figure from the paper: Figure 2, PDF page 4. Extracted for this research introduction; the diagram describes the original system, not verification of this reimplementation.*
+*Graphical abstract diagram. Grounded explanations and expressive behavior support virtual-physician communication.*
 
 ## Why this research
 
