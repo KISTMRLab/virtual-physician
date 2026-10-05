@@ -4,11 +4,11 @@ This repository reproduces the paper's communication architecture while treating
 
 ## Required behavior
 
-1. Load a clinician-authored explanation split into ordered sections with emotion, intensity, gesture, and optional media per section.
-2. Validate attribution, review date, emotion vocabulary, media URLs, and non-empty section text before serving.
-3. Retrieve question-relevant passages from user-provided public/clinician-approved sources and return source-linked evidence.
-4. Use an extractive grounded answer by default so the system cannot silently add medical claims. Expose retrieved evidence as the boundary for a separately reviewed generator.
-5. Emit parallel speech, facial-expression, gesture, and viseme events for each explanation section and answer.
+1. Load a clinician-authored explanation split into ordered sections with emotion (seven paper emotions), intensity preset (1–3), optional authored gesture, optional image or video media, and a doctor/nurse persona bound to an avatar and voice.
+2. Validate attribution, review date, emotion vocabulary, persona definitions, HTTPS image/video URLs, and non-empty section text before serving.
+3. Retrieve question-relevant passages from user-provided public/clinician-approved sources and return source-linked evidence. Remove stopwords and apply a score and content-coverage floor so off-topic questions decline.
+4. Generate a patient-friendly answer over the retrieved passages through a pluggable LLM client (OpenAI-compatible endpoint or local command), requiring citations to the supplied passages. Use the extractive answer when no client is configured or a generation is unusable.
+5. Emit parallel speech, facial-expression (name + level), gesture (authored or retrieved), and viseme events for each explanation section and answer, and render all of them in the browser: answers are spoken and animated, not only displayed.
 6. Provide a browser UI for the scripted explanation, questions/chat, source citations, and a research questionnaire flow.
 7. Questionnaire branching may navigate an authored form but must not calculate diagnoses, risk classes, or validated clinical scores.
 8. Keep all state in the local process/browser by default and avoid collecting personal health information.
@@ -21,8 +21,8 @@ This repository reproduces the paper's communication architecture while treating
 
 ## Acceptance checks
 
-- Tests cover source validation, retrieval provenance, script-to-behavior events, and questionnaire navigation without diagnostic scoring.
-- Server files compile and the static client passes JavaScript syntax checking; no network or model download is required.
+- Tests cover source validation, retrieval provenance, off-topic declines ("What is the capital of France?", "Who won the football world cup in 2018?"), RAG generation with a stub client (citations, fallback, generator decline, local command client), personas and video media, script-to-behavior events, the server starting without the BEAT runtime, and questionnaire navigation without diagnostic scoring.
+- `scripts/verify.py` runs the FastAPI app on the bundled fixtures, including an off-topic decline and the generation path through a stand-in command. No network or model download is required for tests and verification. The browser client has no automated JavaScript test; it is checked manually in a browser.
 
 ## Bundled fictional avatar substitution
 
