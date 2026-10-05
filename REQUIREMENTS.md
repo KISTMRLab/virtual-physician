@@ -23,3 +23,7 @@ This repository reproduces the paper's communication architecture while treating
 
 - Tests cover source validation, retrieval provenance, script-to-behavior events, and questionnaire navigation without diagnostic scoring.
 - Server files compile and the static client passes JavaScript syntax checking; no network or model download is required.
+
+## Bundled fictional avatar substitution
+
+Two newly generated fictional CC0 humanoids replace the original avatar assets in the browser demo. They provide a 53-bone rig and named ARKit/viseme targets. Motion retargeting adapts source joints to their bind pose; speaking envelopes approximate mouth motion rather than phoneme alignment. The optional recorded BEAT companion inspects public motion, face and audio files prepared locally, independently of the paper's learned algorithm. No dataset recordings or trained weights are bundled.

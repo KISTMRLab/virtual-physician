@@ -3,6 +3,7 @@ import { Speech } from "/static/speech.js";
 let script, sectionIndex = 0, formFlow, formItemId;
 const $ = (selector) => document.querySelector(selector);
 const stage = createStage($("#avatar-canvas"), { background: "#e3eee9", color: 0xe7f5ef });
+stage.camera.position.set(0,1.5,3.2);stage.camera.lookAt(0,.9,0);
 const speech = new Speech(stage);
 let behaviorTimers = [];
 
