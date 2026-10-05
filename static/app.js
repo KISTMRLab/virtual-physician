@@ -1,6 +1,6 @@
-import { createStage } from "/static/avatar.js?v=20261006-paper1";
-import { Speech } from "/static/speech.js?v=20261006-paper1";
-import {prepareApplicationMotion,gestureSummary} from "/static/application-gesture.js?v=20261006-paper1";
+import { createStage } from "/static/avatar.js?v=20261006-paper2";
+import { Speech } from "/static/speech.js?v=20261006-paper2";
+import {prepareApplicationMotion,gestureSummary} from "/static/application-gesture.js?v=20261006-paper2";
 let script, sectionIndex = 0, formFlow, formItemId, lastAnswer = null;
 const $ = (selector) => document.querySelector(selector);
 const stage = createStage($("#avatar-canvas"), { background: "#e3eee9", color: 0xe7f5ef });
