@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from dataclasses import asdict
 from pathlib import Path
 
@@ -15,6 +16,8 @@ from .content import ExplanationScript
 from .forms import QuestionnaireFlow
 from .retrieval import GroundedRetriever
 from .speech_backend import SpeechBackend
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
+from beat_runtime import library, query_application
 
 
 class Question(BaseModel):
@@ -34,6 +37,18 @@ def create_app(source_path: str, script_path: str, questionnaire_path: str | Non
     static = Path(static_path) if static_path else Path(__file__).parents[2] / "static"
     app = FastAPI(title="Virtual physician research reimplementation")
     app.mount("/static", StaticFiles(directory=static), name="static")
+    repo_root = Path(__file__).resolve().parents[2]
+
+    @app.get("/api/beat-library")
+    def beat_library():
+        return library(repo_root, "multilingual")
+
+    @app.post("/api/beat-query")
+    def beat_query(payload: dict):
+        try:
+            return query_application(repo_root, "multilingual", str(payload.get("text", "")))
+        except (ValueError, FileNotFoundError) as exc:
+            raise HTTPException(400, str(exc)) from exc
 
     @app.get("/")
     def index():

@@ -10,3 +10,7 @@ outputs/
 build/
 dist/
 static/vendor/
+
+data/
+
+*.pt

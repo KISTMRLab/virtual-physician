@@ -61,12 +61,15 @@ From the repository root, using the Python environment described below:
 
 ```sh
 python -m pip install -e .
+python -m pip install -r scripts/requirements-demo.txt
 python scripts/start_demo.py
 ```
 
-Open **http://127.0.0.1:8080/**. Click **Play section** or **Expressive** to play the bundled synthetic explanation; try the source-grounded question form. The launcher selects the bundled inputs automatically; it also builds the small authored index for RAG demos. Avatar demos prepare their pinned Three.js modules on first launch, so that step needs internet access. Model weights and public datasets are optional for the starter workflow and are prepared separately for real-data use.
+Open **http://127.0.0.1:8080/**. Click **Play section** or **Expressive** to play the bundled synthetic explanation; try the source-grounded question form. The launcher prepares pinned Three.js modules and downloads one small official BEAT BVH/TextGrid sample on first run. It builds a nine-clip local bank and fits the Multilingual Gestures retrieval adapter (English input stays English) under ignored `outputs/beat-library/`; later runs reuse the cache. The first run needs internet access. Original recordings, large datasets, institute assets, and pretrained gesture weights are not distributed.
 
 The 3D presentation uses shared Three.js avatar components and bundled fictional CC0 characters. The paper-specific algorithms and data adapters live in this repository.
+
+The application uses `multilingual` retrieval for recorded co-speech motion: the multilingual gesture component adopted in section 3.5 of the paper. The clinician-authored content, grounded question answering, and questionnaire remain this application's core. The BEAT preparation and retrieval dependencies are vendored in this repository, so no sibling repository checkout is needed. See `scripts/prepare_beat_demo.py` to rebuild the ignored local bank.
 
 <!-- demo-preview:end -->
 
@@ -78,7 +81,7 @@ This standalone repository reimplements the communication pipeline from **“Enh
 
 The original institute implementation is unavailable. This new research implementation supports clinician-authored sectioned explanations, media, expression/gesture/viseme events, source-grounded follow-up questions, and branched feedback forms. It does not contain the paper's Unity project, Faceware captures, avatars, voice/gesture assets, HealthCareMagic sample, generated medical-term data, Llama weights, participant data, or experimental results.
 
-The paper adopts the authors' multilingual co-speech gesture preprint as its gesture-generation research lineage; see the separate [multilingual-gesture implementation](https://github.com/ghazanPK/multilingual-gesture). This demo's motion plan is a transparent adapter and does not reuse that model or claim its trained behavior.
+The paper adopts the authors' multilingual co-speech gesture preprint as its gesture-generation research lineage; see the separate [multilingual-gesture implementation](https://github.com/ghazanPK/multilingual-gesture). This demo fits a compact instance of that method on a small BEAT sample; it does not reuse the institute's weights or reproduce the paper's measured behavior.
 
 The included quickstart uses synthetic interface fixtures without clinical review. A deployment must replace them with licensed educational sources and explanations reviewed by an accountable clinician. This software does not diagnose, recommend treatment, calculate clinical risk, handle emergencies, or replace communication with a qualified clinician.
 
@@ -144,7 +147,7 @@ Copy the three example files, preserve their documented keys, and replace their 
 
 ### Browser event preview
 
-The procedural Three.js character demonstrates the event contract: speech, one facial state with intensity, gesture, and timed viseme cues run in parallel. Browser speech synthesis and text-derived visemes are portable approximations, not the paper's Naver TTS, SALSA lip sync, Faceware expressions, multilingual gesture system, or a validated bedside interface.
+The bundled fictional CC0 characters demonstrate the event contract: speech, one facial state with intensity, gesture, and timed viseme cues run in parallel. Browser speech synthesis and text-derived visemes are portable approximations, not the paper's Naver TTS, SALSA lip sync, Faceware expressions, multilingual gesture system, or a validated bedside interface.
 
 
 ### Public source import and 3D browser playback
@@ -156,7 +159,7 @@ python -m virtual_physician.importer "https://your-permitted-educational-source.
 virtual-physician --sources data/sources.jsonl --script data/approved-script.json
 ```
 
-The browser presents the same authored explanation in neutral and expressive delivery with an original procedural Three.js character. The Q&A pane shows ranked source passages and an extractive answer separately from scripted clinical content. Browser speech and typed questions work without models. The quickstart prepares the pinned renderer in ignored `static/vendor/`; no avatar assets or model weights are included. For optional local speech, run `python -m pip install -e ".[speech]"`, prepare the English phonemizer dependencies in [Kokoro's setup guide](https://github.com/hexgrad/kokoro) (including `espeak-ng` where required), and set `KOKORO_MODEL_DIR` to a user-owned folder with `config.json`, `kokoro-v1_0.pth`, and `voices/af_heart.pt`. Set `WHISPER_MODEL_DIR` to a local converted faster-whisper folder with `model.bin`. The UI reports configuration errors and leaves browser speech and typed input available.
+The browser presents the same authored explanation in neutral and expressive delivery with bundled fictional CC0 characters. Expressive speech uses locally prepared BEAT clips through the vendored multilingual retrieval adapter. The Q&A pane shows ranked source passages and an extractive answer separately from scripted clinical content. Browser speech and typed questions work without models. The quickstart prepares the pinned renderer in ignored `static/vendor/` and a small BEAT retrieval artifact in ignored `outputs/beat-library/`; no original avatar assets or pretrained model weights are included. For optional local speech, run `python -m pip install -e ".[speech]"`, prepare the English phonemizer dependencies in [Kokoro's setup guide](https://github.com/hexgrad/kokoro) (including `espeak-ng` where required), and set `KOKORO_MODEL_DIR` to a user-owned folder with `config.json`, `kokoro-v1_0.pth`, and `voices/af_heart.pt`. Set `WHISPER_MODEL_DIR` to a local converted faster-whisper folder with `model.bin`. The UI reports configuration errors and leaves browser speech and typed input available.
 
 <!-- avatar-recorded-motion:start -->
 ## Bundled characters and recorded public motion
