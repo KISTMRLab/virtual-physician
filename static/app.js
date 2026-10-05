@@ -1,5 +1,5 @@
-import { createStage } from "/static/avatar.js";
-import { Speech } from "/static/speech.js";
+import { createStage } from "/static/avatar.js?v=20261005-gesture7";
+import { Speech } from "/static/speech.js?v=20261005-gesture7";
 let script, sectionIndex = 0, formFlow, formItemId;
 const $ = (selector) => document.querySelector(selector);
 const stage = createStage($("#avatar-canvas"), { background: "#e3eee9", color: 0xe7f5ef });
@@ -28,7 +28,7 @@ function behavior(events) {
     behaviorTimers.push(setTimeout(() => {
       if (event.channel === "expression") stage.expression(event.value, event.intensity);
       if (event.channel === "gesture") stage.gesture(event.value);
-      if (event.channel === "viseme") stage.setSpeech(event.value === "open");
+      // Speech playback owns mouth activation; text timing must not open it.
     }, event.at_ms || 0));
   }
 }
@@ -39,9 +39,10 @@ function showSection(speak = false) {
   $("#counter").textContent = `SECTION ${sectionIndex + 1} OF ${script.sections.length} · ${section.emotion.toUpperCase()} ${section.intensity}/3`;
   $("#speech").textContent = section.text;
   const media = $("#media");
-  media.innerHTML = section.media_url ? `<img src="${section.media_url}" alt="${section.media_alt || "Clinician-provided section illustration"}">` : "<span>No media for this section</span>";
-  behavior(section.events);
-  if (speak) speech.speak(section.text, {backend: $("#speech-backend").value}).catch(error => {$("#delivery-label").textContent = error.message});
+  media.hidden=!section.media_url;media.closest('.stage').classList.toggle('without-media',media.hidden);
+  media.innerHTML = section.media_url ? `<img src="${section.media_url}" alt="${section.media_alt || "Clinician-provided section illustration"}">` : '';
+  behaviorTimers.forEach(clearTimeout);behaviorTimers=[];stage.clearMotion();stage.gesture('idle');stage.setSpeech(false);stage.setSpeechLevel(0);
+  if (speak) playComparison('expressive');
   $("#previous").disabled = sectionIndex === 0; $("#next").disabled = sectionIndex === script.sections.length - 1;
 }
 
@@ -53,9 +54,11 @@ function playComparison(mode) {
     if (event.channel === "gesture") return { ...event, value: "rest", intensity: 0 };
     return event;
   }) : section.events;
-  behavior(events);
   $("#delivery-label").textContent = ` ${mode} · same authored words`;
-  speech.speak(section.text, {backend: $("#speech-backend").value}).catch(error => {$("#delivery-label").textContent = error.message});
+  speech.speak(section.text, {backend: $("#speech-backend").value,
+    onStart:()=>{behavior(events);$("#delivery-label").textContent=`Playing ${mode}`;},
+    onEnd:({reason})=>{behaviorTimers.forEach(clearTimeout);behaviorTimers=[];stage.gesture('idle');$("#delivery-label").textContent=`${reason==='ended'?'Finished':'Stopped'} ${mode}`;}
+  }).catch(error => {$("#delivery-label").textContent = error.message});
 }
 
 async function load() {
