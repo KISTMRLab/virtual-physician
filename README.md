@@ -65,7 +65,7 @@ python -m pip install -r scripts/requirements-demo.txt
 python scripts/start_demo.py
 ```
 
-Open **http://127.0.0.1:8080/**. Click **Play section** or **Expressive** to play the bundled synthetic explanation; try the source-grounded question form. The launcher prepares pinned Three.js modules and downloads one small official BEAT BVH/TextGrid sample on first run. It builds a nine-clip local bank and fits the Multilingual Gestures retrieval adapter (English input stays English) under ignored `outputs/beat-library/`; later runs reuse the cache. The first run needs internet access. Original recordings, large datasets, institute assets, and pretrained gesture weights are not distributed.
+Open **http://127.0.0.1:8080/**. Click **Play section** or **Expressive** to play the bundled synthetic explanation; try the source-grounded question form. The launcher prepares pinned Three.js modules and, on first run, downloads a small official BEAT BVH/TextGrid sample (four takes, about 80 MB) and the all-MiniLM-L6-v2 Sentence-BERT text model (about 92 MB, Apache-2.0) into ignored `models/`, used for text matching (`--offline` skips the download; `BEAT_SBERT_MODEL` or `SBERT_MODEL` selects another local model). It builds a nine-clip local bank and fits the Multilingual Gestures retrieval adapter (English input stays English) under ignored `outputs/beat-library/`; later runs reuse the cache. The first run needs internet access. Original recordings, large datasets, institute assets, and pretrained gesture weights are not distributed.
 
 The 3D presentation uses shared Three.js avatar components and bundled fictional CC0 characters. The paper-specific algorithms and data adapters live in this repository.
 
